@@ -5,6 +5,7 @@ create table cenas (
 	descricao varchar (200)
 );
 
+
 ALTER TABLE cenas 
 MODIFY descricao varchar(250)
 
@@ -21,6 +22,7 @@ create table itens (
     foreign key (id_cena_atual) references cenas (id_cena)
 );
 
+
 //TABELA DE SAVE___________________________________________________________________________
 
 create table save (
@@ -28,7 +30,6 @@ create table save (
 	id_cena_atual int,
 	foreign key(id_cena_atual) references cenas (id_cena)
 );
-
 
 
 //OS INSERTS DAS TABELAS DE CENA____________________________________________________________
