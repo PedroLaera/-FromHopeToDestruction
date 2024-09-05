@@ -90,3 +90,19 @@ insert into cenas (id_cena, descricao) values (16, 'Adam: Fechadura da porta nº
 
 Cena 17
 insert into cenas (id_cena, descricao) values (17, 'Há barulhos vindo da porta!, vá verificar! (next)')
+
+
+//OS INSERTS DAS TABELAS DE TESTE___________________________________________________________
+
+insert into cenas (id_cena, descricao) values (1, 'aaa');
+
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte) 
+           values (1, 'relogio', 'pode ser usado para ver hora', 'pode quebrar','get relogio', 1, 2);
+           
+select * from cenas where id_cena = 1;
+select * from itens
+select * from save;
+select * from itens i where id_cena_atual = 1
+select * from cenas where id_cena
+
+D
