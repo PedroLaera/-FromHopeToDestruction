@@ -1,5 +1,38 @@
+//TABELA DE CENA ____________________________________________________________________________
+
 create table cenas (
-id_cena int not null primary key auto_increment,
-descricao varchar (120)
+	id_cena int not null primary key auto_increment,
+	descricao varchar (200)
 );
 
+ALTER TABLE cenas 
+MODIFY descricao varchar(250)
+
+//TABELA DE ITENS___________________________________________________________________________
+
+create table itens (
+    id_item int not null primary key auto_increment,
+    nome varchar(200),
+    descricao_positiva varchar(200),
+    descricao_negativa varchar(200),
+    comando_correto varchar(200),
+    id_cena_atual int,
+    id_cena_seguinte int,
+    foreign key (id_cena_atual) references cenas (id_cena)
+);
+
+//TABELA DE SAVE___________________________________________________________________________
+
+create table save (
+	id_save int not null primary key auto_increment,
+	id_cena_atual int,
+	foreign key(id_cena_atual) references cenas (id_cena)
+);
+
+
+
+//OS INSERTS DAS TABELAS DE CENA____________________________________________________________
+
+insert into cenas (id_cena, descricao) values (1, '')
+
+insert into save (id_cena_atual) values (1);
