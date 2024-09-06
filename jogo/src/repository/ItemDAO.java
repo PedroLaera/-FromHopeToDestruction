@@ -20,8 +20,8 @@ public class ItemDAO {
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, cena.getIdCena());
         ResultSet resultSet = ps.executeQuery();
-
         List<Item> itens = new ArrayList<>();
+
         while (resultSet.next()){
             Item item = new Item();
             item.setIdItem(resultSet.getInt("id_item"));
