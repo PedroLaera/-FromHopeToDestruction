@@ -8,6 +8,10 @@ create table cenas (
 ALTER TABLE cenas 
 MODIFY descricao varchar(250)
 
+
+
+
+
 //TABELA DE ITENS___________________________________________________________________________
 
 create table itens (
@@ -30,6 +34,12 @@ create table save (
 );
 
 
+//OS INSERTS CORRETOS DA TABELA DE ALTERNATIVAS_____________________________________________
+
+Cena 9
+insert into alternativa (id_alternativa, descricao, comando_correto, id_cena_atual, id_cena_seguinte) 
+values (9, "fio cortado", "cut amarelo", 9, 10);
+  
 
 //OS INSERTS DAS TABELAS DE CENA____________________________________________________________
 
