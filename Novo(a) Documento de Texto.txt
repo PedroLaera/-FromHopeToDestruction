@@ -8,10 +8,6 @@ create table cenas (
 ALTER TABLE cenas 
 MODIFY descricao varchar(250)
 
-
-
-
-
 //TABELA DE ITENS___________________________________________________________________________
 
 create table itens (
@@ -32,6 +28,18 @@ create table save (
 	id_cena_atual int,
 	foreign key(id_cena_atual) references cenas (id_cena)
 );
+
+//TABELA DE ALTERNATIVA____________________________________________________________________
+
+create table alternativa (
+id_alternativa int not null primary key auto_increment,
+descricao varchar (15),
+comando_correto varchar (20),
+id_cena_atual int,
+id_cena_seguinte int,
+foreign key(id_cena_atual) references cenas (id_cena)
+);
+
 
 
 
