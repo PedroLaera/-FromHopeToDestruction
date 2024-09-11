@@ -20,7 +20,6 @@ public class Main {
 
         //Assistir aula do Jucelino do dia 10/09 aula 10
         //Implementar funcionalidade de cada comando
-        //Implementar Itens ainda hoje
 
 
 
