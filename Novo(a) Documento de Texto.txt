@@ -1,3 +1,10 @@
+
+
+
+                                    T A B L E S
+
+
+
 //TABELA DE CENA ____________________________________________________________________________
 
 create table cenas (
@@ -40,6 +47,9 @@ id_cena_seguinte int,
 foreign key(id_cena_atual) references cenas (id_cena)
 );
 
+
+
+                                    I N S E R T S 
 
 
 
@@ -99,6 +109,9 @@ insert into cenas (id_cena, descricao) values (17, 'Há barulhos vindo da porta!
 
 
 
+
+
+
 //OS INSERTS CORRETOS DA TABELA DE ALTERNATIVAS_____________________________________________
 
 Cena 9
@@ -106,11 +119,9 @@ insert into alternativa (id_alternativa, descricao, comando_correto, id_cena_atu
 values (9, "fio cortado", "cut amarelo", 9, 10);
   
 
-//OS INSERTS DAS TABELAS DE CENA____________________________________________________________
 
-insert into cenas (id_cena, descricao) values (1, '')
 
-insert into save (id_cena_atual) values (1);
+
 
 
 //OS INSERTS CORRETOS DA TABELA DE ITENS____________________________________________________
@@ -183,6 +194,20 @@ values (17, "final", "Final", "Final", "next", 17, 1)
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                     T E S T E S 
 
 
@@ -204,5 +229,15 @@ select * from alternativa;
 
 
 insert into save  (id_cena_atual) values (1)
+
+
+
+
+
+
+
+
+
+
 
 
