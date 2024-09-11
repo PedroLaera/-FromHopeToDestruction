@@ -38,58 +38,70 @@ insert into cenas (id_cena, descricao) values (1, '')
 insert into save (id_cena_atual) values (1);
 
 
-//OS INSERTS CORRETOS DA TABELA DE CENAS____________________________________________________
+//OS INSERTS CORRETOS DA TABELA DE ITENS____________________________________________________
 
 Cena 1
-insert into cenas (id_cena, descricao) values (1, 'Adam: Que computador velho... preciso faze-lo funcionar, mas para isso vou precisar de um cabo de energia. Preciso verificar nas gavetas!');
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (1, "gaveta", "dentro da gaveta há um cabo de energia e uma carta", "cuidado, qualquer erro pode ser fatal", "open gaveta", 1, 2);
 
 Cena 2
-insert into cenas (id_cena, descricao) values (2, 'Adam: Ótimo, encontrei o cabo e uma carta escrita "tudo é uma pequena charada", precisamos encontrar a tomada para ligar o computador e dar um jeito de sair daqui, aquela coisa não esta longe!')
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT";
 
 Cena 3
-insert into cenas (id_cena, descricao) values (3, 'Cabo conectado com sucesso! Ligue o computador...')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (3, "computador", "máquina ligada", "algo de errado não está certo", "on computer", 3, 4)
 
 Cena 4
-insert into cenas (id_cena, descricao) values (4, 'Adam: Okay, ligamos o computador, agora preciso abrir o terminal e procurar a fechadura... Abra o terminal...')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (4, "terminal", "terminal aberto...", "ERRO! MAIS ATENÇÃO!", "open terminal", 4, 5)
 
 Cena 5
-insert into cenas (id_cena, descricao) values (5, 'Terminal aberto com sucesso! e tutorial encerrado, você terá apenas três (3) vidas, caso erre o comando ou insira o comando incorreto, o monstro se aproximará mais! Digite "next"')
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT";
 
-Cena 6 
-insert into cenas (id_cena, descricao) values (6, 'Adam: Segundo a carta de Cleitinho do Pneu, que estava na gaveta, preciso achar a senha da fechadura, também tenho que cuidar com a energia pois se acabar o monstro pode me achar! Digite "next"')
+Cena 6
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT";
 
-Cena 7 
-insert into cenas (id_cena, descricao) values (7, 'O aplicativo para desbloquear a fechadura está na área de trabalho...')
+Cena 7
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (7, "área de trabalho", "área de trabalho aberta com sucesso", "ERRO! VOCÊS PERDEU UMA DE SUAS VIDAS", "open areaTrabalho", 7, 8)
 
 Cena 8
-insert into cenas (id_cena, descricao) values (8, 'Muito bem! mas sua energia está acabando... procure outra tomada!')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (8, "tomada", "ótimo! encontramos tomadas", "todas estão danificadas", "select tomada", 8, 9)
 
 Cena 9
-insert into cenas (id_cena, descricao) values (9, 'todas as tomadas estão danificadas, concerte uma delas! Você tem o fio Amarelo (A), Vermelho (B) e Preto (C), um deles está impossibilitanto a passagem de energia! Qual deles é?')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (9, "fio", "agora temos energia", "ERRO! CORTOU O FIO ERRADO, O MONSTRO SE APROXIMA", "cut amarelo" , 9, 10)
 
 Cena 10
-insert into cenas (id_cena, descricao) values (10, 'Muito bem! agora abra o aplicativo!')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (10, "app", "iniciando app...", "ERRO! O MONSTRO ESTÁ TE OUVINDO", "open app", 10, 11)
 
-Cena 11 _____ 76-76 = 0
-insert into cenas (id_cena, descricao) values (11, 'A senha do IP é a idade de a idade de um fisico alemao famoso, menos a idade de Campo Mourão... ')
+Cena 11 -------//NESTA CENA DEVERÁ APARECER UM AVISO DE VALIDAÇÃO DE SENHA DA IP !!!!!!!
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (11, "key", "senha correta!", "senha incorreta", "key = 0", 11, 12)
 
-Cena 12
-insert into cenas (id_cena, descricao) values (12, 'IP verificada! Gerando senha para a fechadura de IP 0...')
+Cena 12 
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT";
 
 Cena 13
-insert into cenas (id_cena, descricao) values (13, 'Erro! A senha da fechadura é a resposta da charada: Sou algo que não pode ser comprado ou vendido, não posso ser dado nem recebido, ninguém pode me evitar, e não sou o começo mas sou o fim. O que sou eu?')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (13, "morte", "Correto!", "Acesso negado", "select morte", 13, 14)
 
 Cena 14
-insert into cenas (id_cena, descricao) values (14, 'Resposta Correta! Digite o nome como key + (nome), para abrir a fechadura...')
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (14, "fechadura", "fechadura aberta", "ERRO! O MONSTRO TE ENCONTROU", "key morte", 14, 15)
 
 Cena 15
-insert into cenas (id_cena, descricao) values (15, 'Fechadura aberta com sucesso!')
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT"
 
 Cena 16
-insert into cenas (id_cena, descricao) values (16, 'Adam: Fechadura da porta nº 15 foi liberada, mas me lembro de estar na sala nº 14, então qual sala abri?')
+//NAO HAVERÁ NENHUM INZERT POIS O ÚNICO COMANDO DADO SERÁ O "NEXT"
 
-Cena 17
-insert into cenas (id_cena, descricao) values (17, 'Há barulhos vindo da porta!, vá verificar! (next)')
+Cena FINAL
+insert into itens (id_item, nome, descricao_positiva, descricao_negativa, comando_correto, id_cena_atual, id_cena_seguinte)
+values (17, "final", "Final", "Final", "next", 17, 1)
+
 
 
 
