@@ -8,9 +8,9 @@ import java.sql.*;
 public class SaveDAO {
 
     public static Save newGame() throws SQLException {
-        Connection connection = Mysql.getConnection();
-        String sql =  "insert into saves (id_cena_atual) values (1)";
-        PreparedStatement stmt = connection.prepareStatement(sql);
+        Connection conn = Mysql.getConnection();
+        String sql =  "insert into save (id_cena_atual) values (1)";
+        PreparedStatement stmt = conn.prepareStatement(sql);
         stmt.execute(sql, Statement.RETURN_GENERATED_KEYS);
         ResultSet generatedKeys = stmt.getGeneratedKeys();
         Save save = new Save();

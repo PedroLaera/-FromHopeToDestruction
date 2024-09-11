@@ -4,6 +4,7 @@ import model.Item;
 import model.Save;
 import repository.CenaDAO;
 import repository.ItemDAO;
+import repository.SaveDAO;
 import spark.Spark;
 
 import java.sql.SQLException;
@@ -12,18 +13,23 @@ import java.util.List;
 import static spark.Spark.port;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
 
-//        Save save = saveDAO.newGame();
+        Save save = SaveDAO.newGame();
+        System.out.println(save.getCenaAtual().getDescricao());
+
+        //Assistir aula do Jucelino do dia 10/09 aula 10
+        //Implementar funcionalidade de cada comando
+        //Implementar Itens ainda hoje
+        
 
 
-        //assistir aula gravada do jucelino no minuto 1:05:04 para continuar
 
 
 
 
 
-
+         //ligação com insomnia
 //        Gson gson = new Gson();
 //        port(3000);
 //        try {
@@ -38,7 +44,11 @@ public class Main {
 //        } catch (SQLException e) {
 //            throw new RuntimeException(e);
 //        }
-//
 
+
+    }
+
+    public static void selectUseObject() {
+        System.out.println("Chamando comando de seleção de objeto ");
     }
 }
