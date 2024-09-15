@@ -1,18 +1,29 @@
 package Comandos;
 
+import java.io.Console;
+
+
 public class Comandos {
+    private final String[] comando;
+    private final Console console;
+
+    public Comandos(String comandoBruto) {
+        Console console = new Console();
+        this.console = console;
+        this.comando = comandoBruto.split(" "); // usado para separar os comandos, como "get + espaço = comando"
+
+        if ("help".equals(this.comando[0])
+                this.help();
+        ) else if ("use".equals(this.comando[0])
+                this.use();
+        )
+    }
 
 }
 
 
 
-
-
-
-
-
-
-//package service;
+//package Comandos;
 //
 //import model.Cena;
 //import model.Console;
@@ -21,9 +32,10 @@ public class Comandos {
 //import repository.CenaDAO;
 //import repository.ItemDAO;
 //import repository.SaveDAO;
-//
 //import java.sql.SQLException;
 //import java.util.List;
+//
+//import static sun.net.InetAddressCachePolicy.get;
 //
 //public class ComandoService {
 //    private final String[] comando;
@@ -37,13 +49,7 @@ public class Comandos {
 //        if ("help".equals(this.comando[0])) {
 //            this.help();
 //        } else if ("use".equals(this.comando[0])) {
-//            use();
-//        }  else if ("check".equals(this.comando[0])) {
-//            check();
-//        } else if ("save".equals(this.comando[0])) {
-//            save();
-//        } else if ("get".equals(this.comando[0])) {
-//            get();
+//            this.use();
 //        }
 //
 //    }

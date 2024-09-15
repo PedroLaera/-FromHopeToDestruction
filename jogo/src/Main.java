@@ -15,8 +15,43 @@ import static spark.Spark.port;
 public class Main {
     public static void main(String[] args) throws SQLException {
 
-//        Save save = SaveDAO.newGame();
-//        System.out.println(save.getCenaAtual().getDescricao());
+        Save save = SaveDAO.newGame();
+        System.out.println(save.getCenaAtual().getDescricao());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         //Assistir aula do Jucelino do dia 10/09 aula 10
         //Implementar funcionalidade de cada comando
@@ -31,21 +66,7 @@ public class Main {
 
 
 
-         //ligação com insomnia
-        Gson gson = new Gson();
-        port(3000);
-        try {
-            Cena cena = CenaDAO.findCenaById(3);
-            System.out.println(cena.toString());
 
-
-            List<Item> itens = ItemDAO.findItensByScene(cena);
-            System.out.println("Itens: " + itens);
-
-            Spark.get("/cena", (req,res) -> gson.toJson(itens));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
 
 
     }
@@ -54,3 +75,47 @@ public class Main {
         System.out.println("Chamando comando de seleção de objeto ");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+////ligação com insomnia
+//Gson gson = new Gson();
+//port(3000);
+//        try {
+//Cena cena = CenaDAO.findCenaById(3);
+//            System.out.println(cena.toString());
+//
+//
+//List<Item> itens = ItemDAO.findItensByScene(cena);
+//            System.out.println("Itens: " + itens);
+//
+//            Spark.get("/cena", (req,res) -> gson.toJson(itens));
+//        } catch (SQLException e) {
+//        throw new RuntimeException(e);
+//        }
