@@ -4,27 +4,22 @@ import repository.CenaDAO;
 
 import java.io.Console;
 import java.sql.SQLException;
-import java.util.logging.ConsoleHandler;
 
 package Comandos;
 
 import model.Cena;
-import model.Console;
 import model.Item;
 import model.Save;
-import repository.CenaDAO;
 import repository.ItemDAO;
 import repository.SaveDAO;
-import java.sql.SQLException;
+
 import java.util.List;
 
-import static sun.net.InetAddressCachePolicy.get;
-
-public class ComandoService {
+public class Comandos {
     private final String[] comando;
     private final Console console;
 
-    public ComandoService(String comandoBruto){
+    public Comandos(String comandoBruto){
         Console console = new Console();
         this.console = console;
         this.comando = comandoBruto.split(" "); // help / use faquinha / check banana
@@ -61,14 +56,31 @@ public class ComandoService {
         }
     }
 
+    private void open() {
+        try {
+            Cena cena = CenaDAO.findCenaById(1);
+
+            List<Item> itens = ItemDAO.findItensByScene(cena);
+            String nomeItem = this.comando[1];
+            for (Item item : itens) {
+                if (item.getNome().equals(nomeItem)) {
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public Console help() {
-        console.setMensagem("Este aqui é o texto de ajuda");
+        console.readLine("Este aqui é o texto de ajuda");
         return console;
     }
 
     public Console start() {
         try {
-            Save save = SaveDAO.novoJogo();
+            Save save = SaveDAO.newGame();
             console.setMensagem(save.getCenaAtual().getDescricao());
             console.setIdSave(save.getIdSave());
             return console;
