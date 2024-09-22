@@ -1,43 +1,28 @@
-import Comandos.Comandos;
 import com.google.gson.Gson;
-import model.Cena;
-import model.Item;
-import model.Save;
-import repository.CenaDAO;
-import repository.ItemDAO;
-import repository.SaveDAO;
+import control.BeforeScene;
+import control.CurrentScene;
 import spark.Spark;
 
-import java.io.Console;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Scanner;
-
-import static spark.Spark.connect;
-import static spark.Spark.port;
-
 public class Main {
-    public static void main(String[] args) throws SQLException {
+    private static final Gson gson = new Gson();
+    public static void main(String[] args) {
 
-        Save save = SaveDAO.newGame();
-        System.out.println(save.getCenaAtual().getDescricao());
+        //Na classe main deixamos apenas as rotas da API
+        //controller -> É responsável por tratar as requisições e respostas http
+        //service -> É responsável pela lógica e regra de negócio da aplicação.
+        //model -> É responsável por definir os atributos e métodos das entidades do projeto.
+        //repository -> É responsável pela comunicação com o banco de dados.
 
-        System.out.println("-----------------------------------------");
+        //Rota 1 http://localhost:4567/{o comando vai aqui}
+        Spark.get("/:comando", new BeforeScene(gson));
 
+        //Rota 2 http://localhost:4567/{comando}/{save}
+        Spark.get("/:comando/:save", new CurrentScene(gson));
 
+        //Implemente mais rotas se precisar
 
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Bem-vindo ao sistema de cenas!");
-        System.out.println("Digite um comando:");
-
-        while (true) {
-            String comandoBruto = scanner.nextLine();
-            if ("open gaveta".equalsIgnoreCase(comandoBruto)) {
-                break; // Encerra
-            } else if ("on computer".equalsIgnoreCase(comandoBruto)) {
-                break;
-            }
-        }
+    }
+}
 
 
 
@@ -71,14 +56,14 @@ public class Main {
         //Assistir aula do Jucelino do dia 10/09 aula 10
         //Implementar funcionalidade de cada comando
 
-        Cena cena = CenaDAO.findCenaById(1);
-        System.out.println(cena);
+//        Cena cena = CenaDAO.findCenaById(1);
+//        System.out.println(cena);
+//
+//    }
+//    public static void selectUseObject() {
+//        System.out.println("Chamando comando de seleção de objeto ");
+//    }
 
-    }
-    public static void selectUseObject() {
-        System.out.println("Chamando comando de seleção de objeto ");
-    }
-}
 
 
 
