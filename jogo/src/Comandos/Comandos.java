@@ -1,5 +1,6 @@
 package Comandos;
 
+import com.google.gson.internal.bind.util.ISO8601Utils;
 import repository.CenaDAO;
 
 import java.io.Console;
@@ -74,7 +75,7 @@ public class Comandos {
 
 
     public Console help() {
-        console.readLine("Este aqui é o texto de ajuda");
+        console.printf("Este aqui é o texto de ajuda");
         return console;
     }
 
@@ -118,7 +119,7 @@ public class Comandos {
 
 
 
-//------------------------------------------------------------------  T E S T E S -----------------------------
+//------------------------------------------------------------------  T E S T E S ------------------------------------------------------------------------
 
 //public class Comandos {
 //    private final String[] comando;

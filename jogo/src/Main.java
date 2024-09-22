@@ -37,8 +37,6 @@ public class Main {
             } else if ("on computer".equalsIgnoreCase(comandoBruto)) {
                 break;
             }
-
-
         }
 
 
