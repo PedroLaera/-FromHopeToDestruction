@@ -20,10 +20,10 @@ public static void main(String[] args) throws SQLException {
     //model -> É responsável por definir os atributos e métodos das entidades do projeto.
     //repository -> É responsável pela comunicação com o banco de dados.
 
-    //Rota 1 http://localhost:3306/{o comando vai aqui}
+    //Rota 1 http://localhost:4567/{o comando vai aqui}
     Spark.get("/:comando",new BeforeScene(gson));
 
-    //Rota 2 http://localhost:3306/{comando}/{save}
+    //Rota 2 http://localhost:4567/{comando}/{save}
     Spark.get("/:comando/:save", new CurrentScene(gson));
 
 }
