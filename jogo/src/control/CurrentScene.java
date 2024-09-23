@@ -14,6 +14,6 @@ public class CurrentScene implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        return "Implementar a Rota";
+        return "http://localhost:3306/cena";
     }
 }

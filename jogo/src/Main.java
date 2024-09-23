@@ -1,6 +1,6 @@
 import com.google.gson.Gson;
-import control.BeforeScene;
 import control.CurrentScene;
+import control.BeforeScene;
 import spark.Spark;
 
 public class Main {
@@ -53,9 +53,8 @@ public class Main {
 
 
 
-        //Assistir aula do Jucelino do dia 10/09 aula 10
-        //Implementar funcionalidade de cada comando
-
+//        //Assistir aula do Jucelino do dia 10/09 aula 10
+//        //Implementar funcionalidade de cada comando
 //        Cena cena = CenaDAO.findCenaById(1);
 //        System.out.println(cena);
 //
@@ -63,7 +62,7 @@ public class Main {
 //    public static void selectUseObject() {
 //        System.out.println("Chamando comando de seleção de objeto ");
 //    }
-
+//
 
 
 
