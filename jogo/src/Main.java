@@ -1,27 +1,31 @@
 import com.google.gson.Gson;
 import control.CurrentScene;
 import control.BeforeScene;
+import model.Cena;
+import repository.CenaDAO;
 import spark.Spark;
 
-public class Main {
-    private static final Gson gson = new Gson();
-    public static void main(String[] args) {
+import java.sql.SQLException;
+import java.util.List;
 
-        //Na classe main deixamos apenas as rotas da API
-        //controller -> É responsável por tratar as requisições e respostas http
-        //service -> É responsável pela lógica e regra de negócio da aplicação.
-        //model -> É responsável por definir os atributos e métodos das entidades do projeto.
-        //repository -> É responsável pela comunicação com o banco de dados.
+import static spark.Spark.port;
 
-        //Rota 1 http://localhost:4567/{o comando vai aqui}
-        Spark.get("/:comando", new BeforeScene(gson));
+private static final Gson gson = new Gson();
 
-        //Rota 2 http://localhost:4567/{comando}/{save}
-        Spark.get("/:comando/:save", new CurrentScene(gson));
+public static void main(String[] args) throws SQLException {
 
-        //Implemente mais rotas se precisar
+    //Na classe main deixamos apenas as rotas da API
+    //controller -> É responsável por tratar as requisições e respostas http
+    //service -> É responsável pela lógica e regra de negócio da aplicação.
+    //model -> É responsável por definir os atributos e métodos das entidades do projeto.
+    //repository -> É responsável pela comunicação com o banco de dados.
 
-    }
+    //Rota 1 http://localhost:3306/{o comando vai aqui}
+    Spark.get("/:comando",new BeforeScene(gson));
+
+    //Rota 2 http://localhost:3306/{comando}/{save}
+    Spark.get("/:comando/:save", new CurrentScene(gson));
+
 }
 
 
@@ -64,46 +68,19 @@ public class Main {
 //    }
 //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //
-////ligação com insomnia
+//ligação com insomnia
 //Gson gson = new Gson();
-//port(3000);
+//port(3306);
 //        try {
-//Cena cena = CenaDAO.findCenaById(3);
+//Cena cena = CenaDAO.findCenaById(1);
 //            System.out.println(cena.toString());
-//
 //
 //List<Item> itens = ItemDAO.findItensByScene(cena);
 //            System.out.println("Itens: " + itens);
 //
 //            Spark.get("/cena", (req,res) -> gson.toJson(itens));
-//        } catch (SQLException e) {
+//        } catch (
+//SQLException e) {
 //        throw new RuntimeException(e);
-//        }
+////        }
