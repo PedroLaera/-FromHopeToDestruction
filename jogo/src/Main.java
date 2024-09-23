@@ -1,14 +1,9 @@
 import com.google.gson.Gson;
-import control.CurrentScene;
 import control.BeforeScene;
-import model.Cena;
-import repository.CenaDAO;
+import control.CurrentScene;
 import spark.Spark;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import static spark.Spark.port;
 
 private static final Gson gson = new Gson();
 
