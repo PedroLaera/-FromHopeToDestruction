@@ -6,7 +6,7 @@ import java.sql.*;
 
 public class CenaDAO {
 
-    public static Cena findCenaById(Integer id) throws SQLException {
+    public static boolean findCenaById() throws SQLException {
         Connection conn = Mysql.getConnection();
         String sql = "select * from cenas where id_cena = ?";
         PreparedStatement stmt = conn.prepareStatement(sql);

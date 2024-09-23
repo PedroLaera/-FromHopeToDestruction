@@ -1,6 +1,5 @@
 package repository;
 
-import com.mysql.cj.MysqlConnection;
 import model.Save;
 
 import java.sql.*;
@@ -17,7 +16,7 @@ public class SaveDAO {
 
         if (generatedKeys.next()) {
             save.setIdSave(generatedKeys.getInt(1));
-            save.setCenaAtual(CenaDAO.findCenaById(1));
+            save.setCenaAtual(CenaDAO.findCenaById());
         }
         return save;
 

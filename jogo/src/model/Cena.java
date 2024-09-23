@@ -15,7 +15,7 @@ public class Cena {
         this.idCena = idCena;
     }
 
-    public String getDescricao() {
+    public static String getDescricao() {
         return descricao;
     }
 
