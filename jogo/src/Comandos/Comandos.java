@@ -203,8 +203,6 @@ public class Comandos {
         return console;
     }
 
-
-
 //--------------------------------------------------------------------------- COMANDO NEXT
 
     private Console next (String comando) {
@@ -230,7 +228,6 @@ public class Comandos {
         }
         return console;
     }
-
 
 //_________________________________________________________________________ A T U A L I Z A    A S    C E N A S
 
