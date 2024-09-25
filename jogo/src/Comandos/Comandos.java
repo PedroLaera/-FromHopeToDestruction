@@ -1,4 +1,4 @@
-package service;
+package Comandos;
 import model.Save;
 import model.Cena;
 import model.Console;
@@ -44,7 +44,7 @@ public class ComandoService {
                     getItem(comando[1]);
                 } else {
                     console.setMensagem("Você precisa especificar um item para pegar.");
-                    console.exibirMensagem();
+                    console.exibirmensagem();
                 }
                 break;
             case "use":
@@ -52,7 +52,7 @@ public class ComandoService {
                     useItem(comando[1]);
                 } else {
                     console.setMensagem("Você precisa especificar um item para usar.");
-                    console.exibirMensagem();
+                    console.exibirmensagem();
                 }
                 break;
             case "check":
@@ -60,7 +60,7 @@ public class ComandoService {
                     checkItem(comando[1]);
                 } else {
                     console.setMensagem("Você precisa especificar um item para verificar.");
-                    console.exibirMensagem();
+                    console.exibirmensagem();
                 }
                 break;
             case "go":
@@ -71,7 +71,7 @@ public class ComandoService {
                 break;
             default:
                 console.setMensagem("Comando inválido. Digite 'help' para ver a lista de comandos.");
-                console.exibirMensagem();
+                console.exibirmensagem();
                 break;
         }
     }
@@ -90,7 +90,7 @@ public class ComandoService {
                 "- restart: Reiniciar o jogo\n" +
                 "- help: Exibir esta mensagem de ajuda\n" +
                 "- exit: Sair do jogo");
-        console.exibirMensagem();
+        console.exibirmensagem();
     }
 
     public void start() throws SQLException {
@@ -101,7 +101,7 @@ public class ComandoService {
             SaveDAO.novoSave(idSave, cenaAtual.getIdCena());
         }
         console.setMensagem("O jogo começou!\n" + cenaAtual.getDescricao());
-        console.exibirMensagem();
+        console.exibirmensagem();
     }
 
 
@@ -128,7 +128,7 @@ public class ComandoService {
         } else {
             console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
         }
-        console.exibirMensagem();
+        console.exibirmensagem();
     }
 
 
@@ -154,11 +154,11 @@ public class ComandoService {
         }
 
         if (itemEncontrado != null) {
-            console.setMensagem("Descrição do item: " + itemEncontrado.getDescricao());
+            console.setMensagem("Descrição do item: " + itemEncontrado.getDescricaoPositiva());
         } else {
             console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
         }
-        console.exibirMensagem();
+        console.exibirmensagem();
     }
 
     public void irParaProximaCena() throws SQLException {
@@ -168,6 +168,6 @@ public class ComandoService {
         } else {
             console.setMensagem("Não há uma próxima cena disponível.");
         }
-        console.exibirMensagem();
+        console.exibirmensagem();
 }
 }
