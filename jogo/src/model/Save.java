@@ -2,7 +2,15 @@ package model;
 
 public class Save {
     private Integer idSave;
-    private Cena cenaAtual;
+    private Integer idCenaAtual;
+
+    public Integer getIdCenaAtual() {
+        return idCenaAtual;
+    }
+
+    public void setIdCenaAtual(Integer idCenaAtual) {
+        this.idCenaAtual = idCenaAtual;
+    }
 
     public Integer getIdSave() {
         return idSave;
@@ -12,19 +20,11 @@ public class Save {
         this.idSave = idSave;
     }
 
-    public Cena getCenaAtual() {
-        return cenaAtual;
-    }
-
-    public void setCenaAtual(Cena cenaAtual) {
-        this.cenaAtual = cenaAtual;
-    }
-
     @Override
     public String toString() {
         return "Save{" +
                 "idSave=" + idSave +
-                ", cenaAtual=" + cenaAtual +
+                ", idCenaAtual=" + idCenaAtual +
                 '}';
     }
 }
