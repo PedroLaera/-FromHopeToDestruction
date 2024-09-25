@@ -1,455 +1,173 @@
-package Comandos;
-
+package service;
+import model.Save;
 import model.Cena;
 import model.Console;
-import model.Save;
+import model.Inventario;
+import model.Item;
 import repository.CenaDAO;
+import repository.InventarioDAO;
 import repository.SaveDAO;
 
 import java.sql.SQLException;
+import java.util.List;
 
-public class Comandos {
+public class ComandoService {
     private final String[] comando;
     private final Console console;
+    private final Inventario inventario;
+    private Cena cenaAtual;
+    private Integer idSave = 1; // ID fictício para o jogo salvo (será usado mais tarde)
 
-    public Comandos(String comandoBruto){
-        Console console = new Console();
-        this.console = console;
+    public ComandoService(String comandoBruto) throws SQLException {
+        this.console = new Console();
         this.comando = comandoBruto.split(" ");
+        this.inventario = new Inventario();
 
-    }
-    //----------------------------------------------------------------------- COMANDO HELP
-    public Console help() {
-        console.setMensagem("Este aqui é o texto de ajuda");
-        return console;
-    }
-    //----------------------------------------------------------------------- COMANDO START
-    public Console start() {
-        try {
-            Save save = SaveDAO.newGame();
-            console.setMensagem(save.getCenaAtual().getDescricao());
-            console.setIdSave(save.getIdSave());
-            return console;
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao tentar iniciar o jogo");
-            return console;
-        }
-    }
-//--------------------------------------------------------------------------- COMANDO OPEN
+        // Carregar o inventário e a cena inicial do banco de dados
+        List<Item> itensInventario = InventarioDAO.getInventarioBySaveId(idSave);
+        inventario.setItens(itensInventario);
 
-    public Console open (String comando) {
-        try {
-            // Verifica se o comando começa com "open"
-            if (comando.startsWith("open ")) {
-                String objeto = comando.substring(5); // Remove "open " para obter o objeto
-                return abrirObjeto(objeto);
-            } else {
-                console.setMensagem("Comando não reconhecido. Tente novamente.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao processar o comando");
-        }
-        return console;
+        // Carregar a primeira cena do banco de dados (por exemplo, ID 1)
+        this.cenaAtual = CenaDAO.findCenaById(1);
     }
 
-    private Console abrirObjeto(String objeto) throws SQLException {
-        switch (objeto) {
-            case "gaveta":
-                console.setMensagem("Você abriu a gaveta. Dentro há um papel.");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
+    public void processarComando() throws SQLException {
+        switch (comando[0].toLowerCase()) {
+            case "help":
+                help();
                 break;
-            case "terminal":
-                console.setMensagem("Você acessou o terminal. Pronto para digitar comandos.");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
+            case "start":
+                start();
                 break;
-            case "areaTrabalho":
-                console.setMensagem("Você olhou para a área de trabalho. Está organizada.");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
-                break;
-            case "app":
-                console.setMensagem("Você abriu o aplicativo. O que deseja fazer?");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
-                break;
-            default:
-                console.setMensagem("Objeto não reconhecido.");
-                break;
-        }
-        return console;
-    }
-
-//--------------------------------------------------------------------------- COMANDO SELECT
-
-    private Console select (String objeto) throws SQLException {
-        switch (objeto) {
-            case "tomada":
-                console.setMensagem("Você selecionou a tomada. A energia está ligada.");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
-                break;
-            case "morte":
-                console.setMensagem("Você selecionou a morte. Uma visão sombria aparece.");
-                CenaDAO.findCenaById();  // Avança para a próxima cena
-                atualizarCena(); // Atualiza a descrição da nova cena
-                break;
-            default:
-                console.setMensagem("Objeto não reconhecido.");
-                break;
-        }
-        return console;
-    }
-
-//--------------------------------------------------------------------------- COMANDO ON
-
-    private Console on (String comando) {
-        try {
-            if (comando.startsWith("on ")) {
-                String objeto = comando.substring(3);
-                return ligarObjeto(objeto);
-            } else {
-                console.setMensagem("Comando não reconhecido. Tente novamente.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao processar o comando");
-        }
-        return console;
-    }
-
-    private Console ligarObjeto(String objeto) throws SQLException {
-        if ("computer".equals(objeto)) {
-            console.setMensagem("Você ligou o computador. A tela acende.");
-            CenaDAO.findCenaById();  // Avança para a próxima cena
-            atualizarCena(); // Atualiza a descrição da nova cena
-        } else {
-            console.setMensagem("Objeto não reconhecido. Tente 'on computer'.");
-        }
-        return console;
-    }
-
-//--------------------------------------------------------------------------- COMANDO CUT
-
-    private Console cut (String comando) {
-        try {
-            if (comando.startsWith("cut ")) {
-                String objeto = comando.substring(4);
-                return cortarObjeto(objeto);
-            } else {
-                console.setMensagem("Comando não reconhecido. Tente novamente.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao processar o comando");
-        }
-        return console;
-    }
-
-    private Console cortarObjeto(String objeto) throws SQLException {
-        if ("amarelo".equals(objeto)) {
-            console.setMensagem("Você cortou o objeto amarelo. Ele se desfaz em pedaços.");
-            CenaDAO.findCenaById();  // Avança para a próxima cena
-            atualizarCena(); // Atualiza a descrição da nova cena
-        } else {
-            console.setMensagem("Objeto não reconhecido. Tente 'cut amarelo'.");
-        }
-        return console;
-    }
-
-//--------------------------------------------------------------------------- COMANDO KEY
-
-    private Console key (String comando, int CenaDAO) {
-        try {
-            if (comando.equals("key = 0")) {
-                return usarChaveZero();
-            } else if (comando.equals("key = morte")) {
-                return usarChaveMorte();
-            } else {
-                console.setMensagem("Comando não reconhecido. Tente novamente.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao processar o comando");
-        }
-        return console;
-    }
-
-    private Console usarChaveZero() throws SQLException {
-        if (CenaDAO.findCenaById()) {
-            console.setMensagem("Você usou a chave 0. A porta se abre.");
-            try {
-                CenaDAO.findCenaById();  // Avança para a próxima cena (de 11 para 12)
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        } else {
-            console.setMensagem("Você não pode usar a chave 0 agora.");
-        }
-        return console;
-    }
-
-    private Console usarChaveMorte() throws SQLException {
-        if (CenaDAO.findCenaById()) {
-            console.setMensagem("Você usou a chave 'morte'. Uma passagem secreta se revela.");
-            CenaDAO.findCenaById();  // Avança para a próxima cena (de 14 para 15)
-            atualizarCena(); // Atualiza a descrição da nova cena
-        } else {
-            console.setMensagem("Você não pode usar a chave 'morte' agora.");
-        }
-        return console;
-    }
-
-//--------------------------------------------------------------------------- COMANDO NEXT
-
-    private Console next (String comando) {
-        try {
-            if (comando.equals("next")) {
-                return proximoCenario();
-            } else {
-                console.setMensagem("Comando não reconhecido. Tente novamente.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            console.setMensagem("Erro ao processar o comando");
-        }
-        return console;
-    }
-
-    private Console proximoCenario() throws SQLException {
-        if (CenaDAO.findCenaById()) {
-            console.setMensagem("Fim de jogo.");  // Mensagem ao finalizar
-            CenaDAO.findCenaById();  // Reinicia o jogo, voltando para a cena 1
-        } else {
-            console.setMensagem("Você não pode pular para a próxima cena agora.");
-        }
-        return console;
-    }
-
-//_________________________________________________________________________ A T U A L I Z A    A S    C E N A S
-
-    private void atualizarCena() {
-        try {
-            boolean cenaAtual = CenaDAO.findCenaById();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        if (comando != null) {
-           console.setMensagem(Cena.getDescricao());
-        } else {
-           console.setMensagem("Cena não encontrada.");
-        }
-}
-
-//___________________________________________________________________________________________
-    public Console getResultadoConsole(){
-        try {
-            //A variável primeiroComando recebe a primeira posição
-            //do array comando.
-            String primeiroComando = comando[0].toLowerCase();
-
-            //O comando switch irá testar o nome do primeiro comando.
-            //se o valor da variável for igual ao da sentença case
-            //iremos chamar o método para tratar sobre aquele comando.
-            return switch (primeiroComando) {
-                case "help" -> help();
-                case "start" -> start();
-                default -> {
-                    console.setMensagem("Comando inválido");
-                    yield console;
+            case "get":
+                if (comando.length > 1) {
+                    getItem(comando[1]);
+                } else {
+                    console.setMensagem("Você precisa especificar um item para pegar.");
+                    console.exibirMensagem();
                 }
-            };
-        } catch (Exception e) {
-            console.setMensagem("Comando inválido");
-            return console;
+                break;
+            case "use":
+                if (comando.length > 1) {
+                    useItem(comando[1]);
+                } else {
+                    console.setMensagem("Você precisa especificar um item para usar.");
+                    console.exibirMensagem();
+                }
+                break;
+            case "check":
+                if (comando.length > 1) {
+                    checkItem(comando[1]);
+                } else {
+                    console.setMensagem("Você precisa especificar um item para verificar.");
+                    console.exibirMensagem();
+                }
+                break;
+            case "go":
+                irParaProximaCena();
+                break;
+            case "inventory":
+                inventario.mostrarInventario();
+                break;
+            default:
+                console.setMensagem("Comando inválido. Digite 'help' para ver a lista de comandos.");
+                console.exibirMensagem();
+                break;
         }
     }
+
+    // Método help para exibir os comandos disponíveis
+    public void help() {
+        console.setMensagem("Comandos disponíveis:\n" +
+                "- start: Iniciar o jogo\n" +
+                "- get [item]: Pegar um item\n" +
+                "- use [item]: Usar um item\n" +
+                "- check [item]: Verificar um item\n" +
+                "- go: Avançar para a próxima cena\n" +
+                "- inventory: Ver itens no inventário\n" +
+                "- save: Salvar o jogo\n" +
+                "- load: Carregar o jogo salvo\n" +
+                "- restart: Reiniciar o jogo\n" +
+                "- help: Exibir esta mensagem de ajuda\n" +
+                "- exit: Sair do jogo");
+        console.exibirMensagem();
+    }
+
+    public void start() throws SQLException {
+        // Verifica se o save já existe, se não, cria um novo save
+        Save save = SaveDAO.findSaveById(idSave);
+        if (save == null) {
+            // Se não há save, cria um novo
+            SaveDAO.novoSave(idSave, cenaAtual.getIdCena());
+        }
+        console.setMensagem("O jogo começou!\n" + cenaAtual.getDescricao());
+        console.exibirMensagem();
+    }
+
+
+    public void getItem(String nomeItem) throws SQLException {
+        Item itemEncontrado = null;
+
+        // Procura o item na lista de itens da cena atual
+        for (Item item : cenaAtual.getItens()) {
+            if (item.getNome().equalsIgnoreCase(nomeItem)) {
+                itemEncontrado = item;
+                break;
+            }
+        }
+
+        if (itemEncontrado != null) {
+            // Adiciona o item ao inventário
+            InventarioDAO.adicionarItemAoInventario(itemEncontrado, idSave);
+            console.setMensagem("Você pegou o item: " + nomeItem);
+
+            // Remove o item da cena atual
+            cenaAtual.removerItem(itemEncontrado);
+
+
+        } else {
+            console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
+        }
+        console.exibirMensagem();
+    }
+
+
+    public void useItem(String nomeItem) throws SQLException {
+        if (inventario.contemItem(nomeItem)) {
+            console.setMensagem("Você usou o item: " + nomeItem);
+            InventarioDAO.removerItemDoInventario(nomeItem, idSave);
+            irParaProximaCena();
+        } else {
+            console.setMensagem("Você não tem o item: " + nomeItem);
+        }
+
+    }
+
+    // Método para verificar um item na cena
+    public void checkItem(String nomeItem) throws SQLException {
+        Item itemEncontrado = null;
+        for (Item item : cenaAtual.getItens()) {
+            if (item.getNome().equalsIgnoreCase(nomeItem)) {
+                itemEncontrado = item;
+                break;
+            }
+        }
+
+        if (itemEncontrado != null) {
+            console.setMensagem("Descrição do item: " + itemEncontrado.getDescricao());
+        } else {
+            console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
+        }
+        console.exibirMensagem();
+    }
+
+    public void irParaProximaCena() throws SQLException {
+        if (cenaAtual.getCenaSeguinte() != null) {
+            cenaAtual = cenaAtual.getCenaSeguinte();
+            console.setMensagem("Você avançou para a próxima cena.\n" + cenaAtual.getDescricao());
+        } else {
+            console.setMensagem("Não há uma próxima cena disponível.");
+        }
+        console.exibirMensagem();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//----------------------------------------------------------------------------------------------------------------------
-
-//package Comandos;
-//import repository.CenaDAO;
-//import java.io.Console;
-//import java.sql.SQLException;
-//import model.Cena;
-//import model.Item;
-//import model.Save;
-//import repository.ItemDAO;
-//import repository.SaveDAO;
-//import model.Console;
-//import java.util.List;
-//
-//public class Comandos {
-//    private final String[] comando;
-//    private final Console console;
-//
-//    public Comandos(String comandoBruto){
-//        Console console = new Console();
-//        this.console = console;
-//        this.comando = comandoBruto.split(" "); // help / use faquinha / check banana
-//
-//        if ("help".equals(this.comando[0])) {
-//            this.help();
-//        } else if ("use".equals(this.comando[0])) {
-//            this.use();
-//        }
-//    }
-//
-//    private void use() {
-//        try {
-//            Cena cena = CenaDAO.findCenaById(1);
-//
-//            List<Item> itens = ItemDAO.findItensByScene(cena);
-//
-//            String nomeItem = this.comando[1];
-//            for (Item item : itens) {
-//                if (item.getNome().equals(nomeItem)) {
-//                }
-//            }
-//            // use chave with porta
-//            if (this.comando[2] != null && "with".equals(this.comando[2])) {
-//                String nomeItem2 = this.comando[3];
-//                for (Item item : itens) {
-//                    if (item.getNome().equals(nomeItem)) {
-//                    }
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    private void open() {
-//        try {
-//            Cena cena = CenaDAO.findCenaById(1);
-//
-//            List<Item> itens = ItemDAO.findItensByScene(cena);
-//            String nomeItem = this.comando[1];
-//            for (Item item : itens) {
-//                if (item.getNome().equals(nomeItem)) {
-//                }
-//            }
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//
-//    public Console help() {
-//        console.printf("Este aqui é o texto de ajuda");
-//        return console;
-//    }
-//
-//    public Console start() {
-//        try {
-//            Save save = SaveDAO.newGame();
-//            console.setMensagem(save.getCenaAtual().getDescricao());
-//            console.setIdSave(save.getIdSave());
-//            return console;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            console.setMensagem("Erro ao tentar iniciar o jogo");
-//            return console;
-//        }
-//    }
-//
-//    public Console getResultadoConsole(){
-//        try {
-//            //A variável primeiroComando recebe a primeira posição
-//            //do array comando.
-//            String primeiroComando = comando[0].toLowerCase();
-//
-//            //O comando switch irá testar o nome do primeiro comando.
-//            //se o valor da variável for igual ao da sentença case
-//            //iremos chamar o método para tratar sobre aquele comando.
-//            return switch (primeiroComando) {
-//                case "help" -> help();
-//                case "start" -> start();
-//                default -> {
-//                    console.setMensagem("Comando inválido");
-//                    yield console;
-//                }
-//            };
-//        } catch (Exception e) {
-//            console.setMensagem("Comando inválido");
-//            return console;
-//        }
-//    }
-//}
-
-
-
-
-//------------------------------------------------------------------  T E S T E S ------------------------------------------------------------------------
-
-//public class Comandos {
-//    private final String[] comando;
-//    private final Console console;
-//
-//    public Comandos(String comandoBruto) {
-//        Console console = new Console();
-//        this.console = console;
-//        this.comando = comandoBruto.split(" "); // usado para separar os comandos, como "get + espaço = comando"
-//
-//        if ("help".equals(this.comando[0])) {
-//            this.help();
-//        } else if ("use".equals(this.comando[0])){
-//            this.use();
-//        } else if ("on".equals(this.comando[0])) {
-//            this.on();
-//        } else if ("open".equals(this.comando[0]){
-//            this.open();
-//        } else if ("select".equals(this.comando[0])) {
-//            this.select();
-//        } else if ()
+}

@@ -2,7 +2,6 @@ package model;
 
 public class Console {
     private String mensagem;
-    private Integer idSave;
 
     public String getMensagem() {
         return mensagem;
@@ -12,11 +11,7 @@ public class Console {
         this.mensagem = mensagem;
     }
 
-    public Integer getIdSave() {
-        return idSave;
-    }
-
-    public void setIdSave(Integer idSave) {
-        this.idSave = idSave;
+    public void exibirmensagem() {
+        System.out.println(mensagem);
     }
 }
