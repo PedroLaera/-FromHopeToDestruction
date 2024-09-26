@@ -103,10 +103,10 @@ public class Comandos {
 
     public void start() throws SQLException {
         // Verifica se o save já existe, se não, cria um novo save
-        Save save = SaveDAO.findSaveById(idSave);
+        Save save = SaveDAO.novoJogo();
         if (save == null) {
             // Se não há save, cria um novo
-            SaveDAO.novoSave(idSave, cenaAtual.getIdCena());
+            SaveDAO.novoJogo();
         }
         console.setMensagem("O jogo começou!\n" + cenaAtual.getDescricao());
         console.exibirmensagem();

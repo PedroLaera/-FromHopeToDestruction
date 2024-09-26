@@ -6,8 +6,8 @@ public class Item {
     private String descricaoPositiva;
     private String descricaoNegativa;
     private String comandoCorreto;
-    private Cena cenaAtual;
-    private Cena cenaSeguinte;
+    private Cena idcenaAtual;
+    private Cena idcenaSeguinte;
 
     public Integer getIdItem() {
         return idItem;
@@ -49,20 +49,20 @@ public class Item {
         this.comandoCorreto = comandoCorreto;
     }
 
-    public Cena getCenaAtual() {
-        return cenaAtual;
+    public Cena getIdcenaAtual() {
+        return idcenaAtual;
     }
 
-    public void setCenaAtual(Cena cenaAtual) {
-        this.cenaAtual = cenaAtual;
+    public void setIdcenaAtual(Cena idcenaAtual) {
+        this.idcenaAtual = idcenaAtual;
     }
 
-    public Cena getCenaSeguinte() {
-        return cenaSeguinte;
+    public Cena getIdcenaSeguinte() {
+        return idcenaSeguinte;
     }
 
-    public void setCenaSeguinte(Cena cenaSeguinte) {
-        this.cenaSeguinte = cenaSeguinte;
+    public void setIdcenaSeguinte(Cena idcenaSeguinte) {
+        this.idcenaSeguinte = idcenaSeguinte;
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Item {
                 ", descricaoPositiva='" + descricaoPositiva + '\'' +
                 ", descricaoNegativa='" + descricaoNegativa + '\'' +
                 ", comandoCorreto='" + comandoCorreto + '\'' +
-                ", cenaAtual=" + cenaAtual +
-                ", cenaSeguinte=" + cenaSeguinte +
+                ", idcenaAtual=" + idcenaAtual +
+                ", idcenaSeguinte=" + idcenaSeguinte +
                 '}';
     }
 }

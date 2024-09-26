@@ -1,39 +1,22 @@
 package repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import model.Save;
-import repository.Mysql;
 
-public class SaveDAO{
-    public SaveDAO(){
-    }
+import java.sql.*;
 
-    public static Save findSaveById(Integer idSave) throws SQLException{
+public class SaveDAO {
+
+    public static Save novoJogo() throws SQLException {
         Connection conn = Mysql.getConnection();
-        String sql = "SELECT * FROM save WHERE id_save = ?";
-        PreparedStatement stmt =conn.prepareStatement(sql);
-        stmt.setInt(1,idSave);
-        ResultSet rs =stmt.executeQuery();
-        Save save = null;
-        if(rs.next()){
-            int idCenaAtual=rs.getInt("id_cena_atual");
-            save = new Save();
-        }
-
-        conn.close();
-        return save;
-    }
-
-    public static void novoSave(Integer idSave,Integer idCenaAtual) throws SQLException{
-        Connection conn = Mysql.getConnection();
-        String sql = "INSERTINTOsave(id_save,id_cena_atual)VALUES(?,?)";
+        String sql = "INSERT INTO saves(id_cena_atual) VALUES (1)";
         PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1,idSave);
-        stmt.setInt(2,idCenaAtual);
-        stmt.executeUpdate();
-        conn.close();
+        stmt.execute(sql, Statement.RETURN_GENERATED_KEYS);
+        ResultSet generatedKeys = stmt.getGeneratedKeys();
+        Save save = new Save();
+        if(generatedKeys.next()){
+            save.setIdSave(generatedKeys.getInt(1));
+            save.setIdCenaAtual(save.getIdCenaAtual());
+        }
+        return save;
     }
 }
