@@ -6,29 +6,37 @@ import model.Inventario;
 import model.Item;
 import repository.CenaDAO;
 import repository.InventarioDAO;
-import repository.SaveDAO;
+import repository.*;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public class ComandoService {
+public class Comandos {
     private final String[] comando;
     private final Console console;
     private final Inventario inventario;
     private Cena cenaAtual;
     private Integer idSave = 1; // ID fictício para o jogo salvo (será usado mais tarde)
 
-    public ComandoService(String comandoBruto) throws SQLException {
+    public Comandos(String comandoBruto) throws SQLException {
         this.console = new Console();
         this.comando = comandoBruto.split(" ");
         this.inventario = new Inventario();
 
         // Carregar o inventário e a cena inicial do banco de dados
         List<Item> itensInventario = InventarioDAO.getInventarioBySaveId(idSave);
-        inventario.setItens(itensInventario);
+        this.inventario.mostrarInventario();
+        this.cenaAtual.getIdCena();
 
-        // Carregar a primeira cena do banco de dados (por exemplo, ID 1)
-        this.cenaAtual = CenaDAO.findCenaById(1);
+        // Carregar a primeira cena do banco de dados (por exemplo, ID 1);
+//        this.cenaAtual = CenaDAO.findCenaById(this.); // Carrega a cena com ID 1
+        if (this.cenaAtual != null) {
+            this.console.setMensagem("Cena carregada: " + this.cenaAtual.getDescricao());
+            this.console.exibirmensagem();
+        } else {
+            this.console.setMensagem("Erro ao carregar a cena.");
+            this.console.exibirmensagem();
+        }
     }
 
     public void processarComando() throws SQLException {
@@ -63,8 +71,8 @@ public class ComandoService {
                     console.exibirmensagem();
                 }
                 break;
-            case "go":
-                irParaProximaCena();
+            case "next":
+                cenaAtual.getIdCenaSeguinte();
                 break;
             case "inventory":
                 inventario.mostrarInventario();
@@ -122,7 +130,7 @@ public class ComandoService {
             console.setMensagem("Você pegou o item: " + nomeItem);
 
             // Remove o item da cena atual
-            cenaAtual.removerItem(itemEncontrado);
+            cenaAtual.getIdCena(itemEncontrado);
 
 
         } else {
@@ -136,7 +144,7 @@ public class ComandoService {
         if (inventario.contemItem(nomeItem)) {
             console.setMensagem("Você usou o item: " + nomeItem);
             InventarioDAO.removerItemDoInventario(nomeItem, idSave);
-            irParaProximaCena();
+            irParaProximaCena(cenaAtual.getIdCenaSeguinte());
         } else {
             console.setMensagem("Você não tem o item: " + nomeItem);
         }
@@ -161,13 +169,12 @@ public class ComandoService {
         console.exibirmensagem();
     }
 
-    public void irParaProximaCena() throws SQLException {
-        if (cenaAtual.getCenaSeguinte() != null) {
-            cenaAtual = cenaAtual.getCenaSeguinte();
+    public void irParaProximaCena(Integer cena) throws SQLException {
+        if (cenaAtual.getIdCenaSeguinte() != null) {
+            cena = cenaAtual.getIdCenaSeguinte();
             console.setMensagem("Você avançou para a próxima cena.\n" + cenaAtual.getDescricao());
         } else {
             console.setMensagem("Não há uma próxima cena disponível.");
-        }
-        console.exibirmensagem();
+        } console.exibirmensagem();
 }
 }

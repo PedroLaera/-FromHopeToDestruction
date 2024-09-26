@@ -1,26 +1,33 @@
-import com.google.gson.Gson;
-import control.BeforeScene;
-import control.CurrentScene;
-import spark.Spark;
-
 import java.sql.SQLException;
+import java.util.Scanner;
+import Comandos.Comandos;
 
-private static final Gson gson = new Gson();
+public class Main {
+    public Main() {
+    }
 
-public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Bem-vindo ao Text Adventure Game!");
+        System.out.println("Digite 'help' para ver os comandos disponíveis.");
 
-//    //Na classe main deixamos apenas as rotas da API
-//    //controller -> É responsável por tratar as requisições e respostas http
-//    //service -> É responsável pela lógica e regra de negócio da aplicação.
-//    //model -> É responsável por definir os atributos e métodos das entidades do projeto.
-//    //repository -> É responsável pela comunicação com o banco de dados.
-//
-//    //Rota 1 http://localhost:4567/{o comando vai aqui}
-//    Spark.get("/:comando",new BeforeScene(gson));
-//
-//    //Rota 2 http://localhost:4567/{comando}/{save}
-//    Spark.get("/:comando/:save", new CurrentScene(gson));
+        String comando;
+        do {
+            System.out.print("> ");
+            comando = scanner.nextLine();
 
+            try {
+                Comandos comandoService = new Comandos(comando);
+                comandoService.processarComando();
+            } catch (SQLException var4) {
+                SQLException e = var4;
+                System.out.println("Erro ao processar o comando: " + e.getMessage());
+            }
+        } while(!comando.equalsIgnoreCase("exit"));
+
+        System.out.println("Saindo do jogo...");
+        scanner.close();
+    }
 }
 
 

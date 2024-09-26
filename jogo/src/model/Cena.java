@@ -3,10 +3,13 @@ package model;
 import java.util.List;
 
 public class Cena {
-    private Integer idCena;
+    private int idCena;
     private String descricao;
     private Integer idCenaSeguinte;
     private List<Item> itens;
+
+    public Cena() {
+    }
 
     public Integer getIdCena() {
         return idCena;
@@ -36,7 +39,22 @@ public class Cena {
         return itens;
     }
 
-    public void setItens(List<Item> itens) {
+    public void setItens() {
         this.itens = itens;
+    }
+
+
+
+    public void getIdCena(Item itemEncontrado) {
+    }
+
+    @Override
+    public String toString() {
+        return "Cena{" +
+                "idCena=" + idCena +
+                ", descricao='" + descricao + '\'' +
+                ", idCenaSeguinte=" + idCenaSeguinte +
+                ", itens=" + itens +
+                '}';
     }
 }
