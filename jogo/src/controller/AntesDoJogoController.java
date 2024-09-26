@@ -1,16 +1,17 @@
-//package control;
+//package controller;
 //
+//import Comandos.Comandos;
 //import com.google.gson.Gson;
 //import model.Console;
-//import Comandos.Comandos;
+//import service.ComandoStart;
 //import spark.Request;
 //import spark.Response;
 //import spark.Route;
 //
 //
-//public class BeforeScene implements Route {
+//public class AntesDoJogoController implements Route {
 //    private final Gson gson;
-//    public BeforeScene (Gson gson) {
+//    public AntesDoJogoController(Gson gson) {
 //        this.gson = gson;
 //    }
 //
@@ -20,10 +21,10 @@
 //        String comandoBruto = request.params(":comando");
 //
 //        //Instancia comando service passando o comando bruto como parâmetro do construtor.
-//        Comandos comandos = new Comandos(comandoBruto);
+//        Comandos comandoService = new Comandos();
 //
 //        //O método getResultadoConsole retorna uma instância da classe Console.
-//        Console console = comandos.getResultadoConsole();
+////        Console console = comandoService.executarComandos();
 //
 //        //Retornamos o objeto console convertido para Json.
 //        return gson.toJson(console);

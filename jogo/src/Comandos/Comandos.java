@@ -1,188 +1,96 @@
 package Comandos;
-import model.Save;
-import model.Cena;
-import model.Console;
-import model.Inventario;
-import model.Item;
-import repository.CenaDAO;
-import repository.InventarioDAO;
-import repository.*;
 
-import java.sql.SQLException;
-import java.util.List;
+import java.util.Scanner;
+import model.Console;
+import service.ComandoCheck;
+import service.ComandoGet;
+import service.ComandoHelp;
+import service.ComandoInventory;
+import service.ComandoLoad;
+import service.ComandoRestart;
+import service.ComandoStart;
+import service.ComandoUse;
 
 public class Comandos {
-    private final String[] comando;
-    private Console console;
-    private final Inventario inventario;
-    private Cena cenaAtual;
-    private Integer idSave = 1; // ID fictício para o jogo salvo (será usado mais tarde)
-
-    public Comandos(String comandoBruto) throws SQLException {
-        this.console = new Console();
-        this.comando = comandoBruto.split(" ");
-        this.inventario = new Inventario();
-
-        // Carregar o inventário e a cena inicial do banco de dados
-        List<Item> itensInventario = InventarioDAO.getInventarioBySaveId(idSave);
-        this.inventario.mostrarInventario();
-        this.cenaAtual.getIdCena();
-
-        // Carregar a primeira cena do banco de dados (por exemplo, ID 1);
-//        this.cenaAtual = CenaDAO.findCenaById(this.); // Carrega a cena com ID 1
-        if (this.cenaAtual != null) {
-            this.console.setMensagem("Cena carregada: " + this.cenaAtual.getDescricao());
-            this.console.exibirmensagem();
-        } else {
-            this.console.setMensagem("Erro ao carregar a cena.");
-            this.console.exibirmensagem();
-        }
+    public Comandos() {
     }
 
-    public void processarComando() throws SQLException {
-        switch (comando[0].toLowerCase()) {
-            case "help":
-                help();
-                break;
-            case "start":
-                start();
-                break;
-            case "get":
-                if (comando.length > 1) {
-                    getItem(comando[1]);
-                } else {
-                    console.setMensagem("Você precisa especificar um item para pegar.");
-                    console.exibirmensagem();
+    public void executarComandos() {
+        Scanner scanner = new Scanner(System.in);
+        ComandoHelp comandoHelp = new ComandoHelp();
+        ComandoStart comandoStart = new ComandoStart();
+        ComandoUse comandoUse = new ComandoUse();
+        ComandoGet comandoGet = new ComandoGet();
+        ComandoInventory comandoInventory = new ComandoInventory();
+        ComandoCheck comandoCheck = new ComandoCheck();
+        new ComandoLoad();
+        ComandoRestart comandoRestart = new ComandoRestart();
+
+        System.out.println("Bem-vindo ao jogo!");
+        Console console = (Console) comandoStart.executar().get(0);
+        System.out.println(console.getMensagem());
+        int idSave = console.getIdSave();
+
+        while (true) {
+            System.out.print("> ");
+            String input = scanner.nextLine();
+            String[] parts = input.trim().split("\\s+");
+            if (parts.length != 0 && !parts[0].isEmpty()) {
+                String itemNome;
+                switch (parts[0].toUpperCase()) {
+                    case "HELP":
+                        System.out.println(comandoHelp.executar());
+                        break;
+                    case "CHECK":
+                        if (parts.length > 1) {
+                            itemNome = parts[1];
+                            System.out.println(comandoCheck.executar(itemNome, idSave).getMensagem());
+                        } else {
+                            System.out.println("Por favor, especifique o item a ser verificado.");
+                        }
+                        break;
+                    case "GET":
+                        if (parts.length > 1) {
+                            itemNome = parts[1];
+                            System.out.println(comandoGet.executar(itemNome, idSave).getMensagem());
+                        } else {
+                            System.out.println("Por favor, especifique o item a ser pego.");
+                        }
+                        break;
+                    case "INVENTORY":
+                        System.out.println(comandoInventory.executar(idSave).getMensagem());
+                        break;
+                    case "USE":
+                        if (parts.length > 3 && parts[2].equalsIgnoreCase("WITH")) {
+                            itemNome = parts[1];
+                            String itemCenaNome = parts[3];
+                            System.out.println(comandoUse.executar(itemNome, idSave).getMensagem());
+                        } else if (parts.length > 1) {
+                            itemNome = parts[1];
+                            System.out.println(comandoUse.executar(itemNome, idSave).getMensagem());
+                        } else {
+                            System.out.println("Por favor, especifique o item a ser usado.");
+                        }
+                        break;
+                    case "RESTART":
+                        System.out.println(comandoRestart.executar(idSave).getMensagem());
+                        break;
+                    case "SAVE":
+                        System.out.println("Jogo salvo com sucesso!");
+                        break;
+                    case "LOAD":
+                        System.out.println("Carregando...");
+                        break;
+                    case "EXIT":
+                        System.out.println("Saindo do jogo...\nAté Mais, Te Espero Por Aqui!!");
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println("Comando errado, o monstro se aproxima");
                 }
-                break;
-            case "use":
-                if (comando.length > 1) {
-                    useItem(comando[1]);
-                } else {
-                    console.setMensagem("Você precisa especificar um item para usar.");
-                    console.exibirmensagem();
-                }
-                break;
-            case "check":
-                if (comando.length > 1) {
-                    checkItem(comando[1]);
-                } else {
-                    console.setMensagem("Você precisa especificar um item para verificar.");
-                    console.exibirmensagem();
-                }
-                break;
-            case "next":
-                cenaAtual.getIdCenaSeguinte();
-                break;
-            case "inventory":
-                inventario.mostrarInventario();
-                break;
-            default:
-                console.setMensagem("Comando inválido. Digite 'help' para ver a lista de comandos.");
-                console.exibirmensagem();
-                break;
-        }
-    }
-
-    // Método help para exibir os comandos disponíveis
-    public void help() {
-        console.setMensagem("Comandos disponíveis:\n" +
-                "- start: Iniciar o jogo\n" +
-                "- get [item]: Pegar um item\n" +
-                "- use [item]: Usar um item\n" +
-                "- check [item]: Verificar um item\n" +
-                "- go: Avançar para a próxima cena\n" +
-                "- inventory: Ver itens no inventário\n" +
-                "- save: Salvar o jogo\n" +
-                "- load: Carregar o jogo salvo\n" +
-                "- restart: Reiniciar o jogo\n" +
-                "- help: Exibir esta mensagem de ajuda\n" +
-                "- exit: Sair do jogo");
-        console.exibirmensagem();
-    }
-
-    public void start() throws SQLException {
-        // Verifica se o save já existe, se não, cria um novo save
-        Save save = SaveDAO.novoJogo();
-        if (save == null) {
-            // Se não há save, cria um novo
-            SaveDAO.novoJogo();
-        }
-        console.setMensagem("O jogo começou!\n" + cenaAtual.getDescricao());
-        console.exibirmensagem();
-    }
-
-
-    public void getItem(String nomeItem) throws SQLException {
-        Item itemEncontrado = null;
-
-        // Procura o item na lista de itens da cena atual
-        for (Item item : cenaAtual.getItens()) {
-            if (item.getNome().equalsIgnoreCase(nomeItem)) {
-                itemEncontrado = item;
-                break;
+            } else {
+                System.out.println("Por favor, insira um comando. Digite *HELP* para ver os comandos disponíveis.");
             }
         }
-
-        if (itemEncontrado != null) {
-            // Adiciona o item ao inventário
-            InventarioDAO.adicionarItemAoInventario(itemEncontrado, idSave);
-            console.setMensagem("Você pegou o item: " + nomeItem);
-
-            // Remove o item da cena atual
-            cenaAtual.getIdCena(itemEncontrado);
-
-
-        } else {
-            console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
-        }
-        console.exibirmensagem();
-    }
-
-
-    public void useItem(String nomeItem) throws SQLException {
-        if (inventario.contemItem(nomeItem)) {
-            console.setMensagem("Você usou o item: " + nomeItem);
-            InventarioDAO.removerItemDoInventario(nomeItem, idSave);
-            irParaProximaCena(cenaAtual.getIdCenaSeguinte());
-        } else {
-            console.setMensagem("Você não tem o item: " + nomeItem);
-        }
-
-    }
-
-    // Método para verificar um item na cena
-    public void checkItem(String nomeItem) throws SQLException {
-        Item itemEncontrado = null;
-        for (Item item : cenaAtual.getItens()) {
-            if (item.getNome().equalsIgnoreCase(nomeItem)) {
-                itemEncontrado = item;
-                break;
-            }
-        }
-
-        if (itemEncontrado != null) {
-            console.setMensagem("Descrição do item: " + itemEncontrado.getDescricaoPositiva());
-        } else {
-            console.setMensagem("Item " + nomeItem + " não encontrado na cena.");
-        }
-        console.exibirmensagem();
-    }
-
-    public void irParaProximaCena(Integer cena) throws SQLException {
-        if (cenaAtual.getIdCenaSeguinte() != null) {
-            cena = cenaAtual.getIdCenaSeguinte();
-            console.setMensagem("Você avançou para a próxima cena.\n" + cenaAtual.getDescricao());
-        } else {
-            console.setMensagem("Não há uma próxima cena disponível.");
-        } console.exibirmensagem();
-}
-
-    public Console getResultadoConsole() {
-        return console;
-    }
-
-    public void setResultadoConsole(Console resultadoConsole) {
-        this.console = resultadoConsole;
     }
 }
