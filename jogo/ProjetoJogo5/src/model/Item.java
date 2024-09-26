@@ -1,11 +1,7 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package model;
 
 public class Item {
+
     private Integer idItem;
     private Cena id_Cena;
     private String nome;
@@ -15,8 +11,7 @@ public class Item {
     private Boolean interagivel;
     private Integer idProximaCena;
 
-    public Item() {
-    }
+    public Item() {}
 
     public Item(Integer idItem, Cena id_Cena, String nome, String descricaoPositiva, String descricaoNegativa, String comandoCorreto, Boolean interagivel) {
         this.idItem = idItem;
@@ -29,7 +24,7 @@ public class Item {
     }
 
     public Integer getIdItem() {
-        return this.idItem;
+        return idItem;
     }
 
     public void setIdItem(Integer idItem) {
@@ -37,7 +32,7 @@ public class Item {
     }
 
     public Cena getId_Cena() {
-        return this.id_Cena;
+        return id_Cena;
     }
 
     public void setId_Cena(Cena id_Cena) {
@@ -45,7 +40,7 @@ public class Item {
     }
 
     public String getNome() {
-        return this.nome;
+        return nome;
     }
 
     public void setNome(String nome) {
@@ -53,7 +48,7 @@ public class Item {
     }
 
     public String getDescricaoPositiva() {
-        return this.descricaoPositiva;
+        return descricaoPositiva;
     }
 
     public void setDescricaoPositiva(String descricaoPositiva) {
@@ -61,7 +56,7 @@ public class Item {
     }
 
     public String getDescricaoNegativa() {
-        return this.descricaoNegativa;
+        return descricaoNegativa;
     }
 
     public void setDescricaoNegativa(String descricaoNegativa) {
@@ -69,7 +64,7 @@ public class Item {
     }
 
     public String getComandoCorreto() {
-        return this.comandoCorreto;
+        return comandoCorreto;
     }
 
     public void setComandoCorreto(String comandoCorreto) {
@@ -77,7 +72,7 @@ public class Item {
     }
 
     public Boolean getInteragivel() {
-        return this.interagivel;
+        return interagivel;
     }
 
     public void setInteragivel(Boolean interagivel) {
@@ -85,23 +80,33 @@ public class Item {
     }
 
     public Integer getIdProximaCena() {
-        return this.idProximaCena;
+        return idProximaCena;
     }
 
     public void setIdProximaCena(Integer idProximaCena) {
         this.idProximaCena = idProximaCena;
     }
 
+    @Override
     public String toString() {
-        Integer var10000 = this.idItem;
-        return "Item{idItem=" + var10000 + ", id_Cena=" + String.valueOf(this.id_Cena) + ", nome='" + this.nome + "', descricaoPositiva='" + this.descricaoPositiva + "', descricaoNegativa='" + this.descricaoNegativa + "', comandoCorreto='" + this.comandoCorreto + "', interagivel=" + this.interagivel + "}";
+        return "Item{" +
+                "idItem=" + idItem +
+                ", id_Cena=" + id_Cena +
+                ", nome='" + nome + '\'' +
+                ", descricaoPositiva='" + descricaoPositiva + '\'' +
+                ", descricaoNegativa='" + descricaoNegativa + '\'' +
+                ", comandoCorreto='" + comandoCorreto + '\'' +
+                ", interagivel=" + interagivel +
+                '}';
     }
 
     public String getDescricao() {
+
         throw new UnsupportedOperationException("nao deu");
     }
 
     public String getDetalhes() {
+
         throw new UnsupportedOperationException("ainda nao foi ");
     }
 }

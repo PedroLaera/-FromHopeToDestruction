@@ -1,24 +1,16 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package model;
-
-import java.sql.SQLException;
 import repository.CenaDAO;
 import repository.SaveDAO;
+
+import java.sql.SQLException;
 
 public class Save {
     private int idSave;
     private Cena cenaAtual;
     private String nomeJogador;
 
-    public Save() {
-    }
-
     public int getIdSave() {
-        return this.idSave;
+        return idSave;
     }
 
     public void setIdSave(int idSave) {
@@ -26,7 +18,7 @@ public class Save {
     }
 
     public Cena getCenaAtual() {
-        return this.cenaAtual;
+        return cenaAtual;
     }
 
     public void setCenaAtual(Cena cenaAtual) {
@@ -34,7 +26,7 @@ public class Save {
     }
 
     public String getNomeJogador() {
-        return this.nomeJogador;
+        return nomeJogador;
     }
 
     public void setNomeJogador(String nomeJogador) {
@@ -45,4 +37,5 @@ public class Save {
         this.cenaAtual = CenaDAO.findCenaById(novoIdCena);
         SaveDAO.updateIdCenaAtual(this.idSave, novoIdCena);
     }
+
 }

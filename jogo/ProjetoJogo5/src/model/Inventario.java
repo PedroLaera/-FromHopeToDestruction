@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package model;
 
 public class Inventario {
@@ -11,45 +6,36 @@ public class Inventario {
     private String descricao;
     private Integer id_save;
 
-    public Inventario() {
-    }
-
     public Integer getIdInventario() {
-        return this.idInventario;
+        return idInventario;
     }
-
     public void setIdInventario(Integer idInventario) {
         this.idInventario = idInventario;
     }
-
     public String getNomeItem() {
-        return this.nomeItem;
+        return nomeItem;
     }
-
     public void setNomeItem(String nomeItem) {
         this.nomeItem = nomeItem;
     }
-
     public String getDescricao() {
-        return this.descricao;
+        return descricao;
     }
-
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-
     public Integer getId_save() {
-        return this.id_save;
+        return id_save;
     }
-
     public void setId_save(Integer id_save) {
         this.id_save = id_save;
     }
 
+    @Override
     public String toString() {
-        return "Inventario [idInventario=" + this.idInventario + ", nomeItem=" + this.nomeItem + ", descricao=" + this.descricao + ", id_save=" + this.id_save + "]";
+        return "Inventario [idInventario=" + idInventario + ", nomeItem=" + nomeItem + ", descricao=" + descricao
+                + ", id_save=" + id_save + "]";
     }
-
     public Object getQuantidade() {
         throw new UnsupportedOperationException("Unimplemented method 'getQuantidade'");
     }

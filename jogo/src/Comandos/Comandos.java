@@ -13,7 +13,7 @@ import java.util.List;
 
 public class Comandos {
     private final String[] comando;
-    private final Console console;
+    private Console console;
     private final Inventario inventario;
     private Cena cenaAtual;
     private Integer idSave = 1; // ID fictício para o jogo salvo (será usado mais tarde)
@@ -177,4 +177,12 @@ public class Comandos {
             console.setMensagem("Não há uma próxima cena disponível.");
         } console.exibirmensagem();
 }
+
+    public Console getResultadoConsole() {
+        return console;
+    }
+
+    public void setResultadoConsole(Console resultadoConsole) {
+        this.console = resultadoConsole;
+    }
 }

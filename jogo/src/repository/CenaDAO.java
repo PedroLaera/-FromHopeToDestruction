@@ -1,58 +1,127 @@
-package repository;
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
 
-import model.Cena;
+package repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import model.Cena;
 
-// Data Access Object
 public class CenaDAO {
+    public CenaDAO() {
+    }
 
-
-    public static Integer findCenaById(Integer id) throws SQLException {
+    public static Cena findCenaById(int id) throws SQLException {
+        String sql = "SELECT * FROM cenas WHERE id = ?";
+        Cena cena = null;
         Connection conn = Mysql.getConnection();
-        String sql = "SELECT * FROM cenas WHERE id_cena = ?";
-        PreparedStatement stmt = conn.prepareStatement(sql);
-        stmt.setInt(1, id);
-        ResultSet rs = stmt.executeQuery();
-        Cena cena = new Cena();
 
-        if (rs.next()) {
-            cena.setIdCena(
-                    rs.getInt("id_cena")
-            );
-            cena.setDescricao(rs.getString("descricao"));
+        try {
+            PreparedStatement stmt = conn.prepareStatement(sql);
+
+            try {
+                stmt.setInt(1, id);
+                ResultSet rs = stmt.executeQuery();
+
+                try {
+                    if (rs.next()) {
+                        cena = new Cena();
+                        cena.setId(rs.getInt("id"));
+                        cena.setDescricao(rs.getString("descricao"));
+                    }
+                } catch (Throwable var11) {
+                    if (rs != null) {
+                        try {
+                            rs.close();
+                        } catch (Throwable var10) {
+                            var11.addSuppressed(var10);
+                        }
+                    }
+
+                    throw var11;
+                }
+
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (Throwable var12) {
+                if (stmt != null) {
+                    try {
+                        stmt.close();
+                    } catch (Throwable var9) {
+                        var12.addSuppressed(var9);
+                    }
+                }
+
+                throw var12;
+            }
+
+            if (stmt != null) {
+                stmt.close();
+            }
+        } catch (Throwable var13) {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Throwable var8) {
+                    var13.addSuppressed(var8);
+                }
+            }
+
+            throw var13;
         }
+
+        if (conn != null) {
+            conn.close();
+        }
+
         return cena;
     }
 
     public static void insertCena(Cena cena) throws SQLException {
-        Connection connection = Mysql.getConnection();
         String insert = "INSERT INTO cenas(descricao) VALUES (?);";
-        PreparedStatement ps = connection.prepareStatement(insert);
-        ps.setString(1, cena.getDescricao());
-        ps.execute();
-    }
+        Connection conn = Mysql.getConnection();
 
-    public static List<Cena> findAll() throws SQLException {
-        Connection connection = Mysql.getConnection();
-        String sql = "select * from cenas;";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ResultSet resultSet = ps.executeQuery();
+        try {
+            PreparedStatement ps = conn.prepareStatement(insert);
 
-        List<Cena> cenas = new ArrayList<>();
-        while (resultSet.next()) {
-            Cena cena = new Cena();
-            cena.setIdCena(resultSet.getInt("id_cena"));
-            cena.setDescricao(resultSet.getString("descricao"));
+            try {
+                ps.setString(1, cena.getDescricao());
+                ps.executeUpdate();
+            } catch (Throwable var8) {
+                if (ps != null) {
+                    try {
+                        ps.close();
+                    } catch (Throwable var7) {
+                        var8.addSuppressed(var7);
+                    }
+                }
 
-            cenas.add(cena);
+                throw var8;
+            }
+
+            if (ps != null) {
+                ps.close();
+            }
+        } catch (Throwable var9) {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (Throwable var6) {
+                    var9.addSuppressed(var6);
+                }
+            }
+
+            throw var9;
         }
-        return cenas;
-    }
 
+        if (conn != null) {
+            conn.close();
+        }
+
+    }
 }

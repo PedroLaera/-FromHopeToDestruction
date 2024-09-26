@@ -1,19 +1,11 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package model;
 
 public class Console {
     private String mensagem;
     private Integer idSave;
 
-    public Console() {
-    }
-
     public String getMensagem() {
-        return this.mensagem;
+        return mensagem;
     }
 
     public void setMensagem(String mensagem) {
@@ -21,7 +13,7 @@ public class Console {
     }
 
     public Integer getIdSave() {
-        return this.idSave;
+        return idSave;
     }
 
     public void setIdSave(Integer idSave) {

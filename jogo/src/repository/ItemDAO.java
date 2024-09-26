@@ -1,38 +1,121 @@
+//
+// Source code recreated from a .class file by IntelliJ IDEA
+// (powered by FernFlower decompiler)
+//
+
 package repository;
 
-import model.Cena;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import model.Item;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public class ItemDAO {
-    public static Item findItemById(Integer id) {
-        return new Item();
+    public ItemDAO() {
     }
 
-    public static List<Item> findItensByScene(Cena cena) throws SQLException {
-        Connection connection = Mysql.getConnection();
-        String sql = "select * from itens i where id_cena_atual = ?;";
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, cena.getIdCena());
-        ResultSet resultSet = ps.executeQuery();
+    public static Item findItemByCenaId(int idCena, String nomeItem) throws SQLException {
+        String sql = "SELECT * FROM itens_da_cena WHERE id_cena_atual = ? AND nome = ?";
+        Connection conn = Mysql.getConnection();
 
-        List<Item> itens = new ArrayList<>();
-        while (resultSet.next()) {
-            Item item = new Item();
-            item.setIdItem(resultSet.getInt("id_item"));
-            item.setNome(resultSet.getString("nome"));
-            // preencher o restante das propriedades
+        Item var7;
+        label104: {
+            Item item;
+            try {
+                PreparedStatement stmt;
+                label106: {
+                    stmt = conn.prepareStatement(sql);
 
-            Integer idCenaAtual = resultSet.getInt("id_cena_atual");
+                    try {
+                        label107: {
+                            stmt.setInt(1, idCena);
+                            stmt.setString(2, nomeItem);
+                            ResultSet rs = stmt.executeQuery();
 
-            item.setidCenaAtual(idCenaAtual);
+                            label92: {
+                                try {
+                                    if (!rs.next()) {
+                                        item = null;
+                                        break label92;
+                                    }
 
-            itens.add(item);
+                                    item = new Item();
+                                    item.setIdItem(rs.getInt("id"));
+                                    item.setNome(rs.getString("nome"));
+                                    item.setDescricaoPositiva(rs.getString("descricao_positiva"));
+                                    item.setDescricaoNegativa(rs.getString("descricao_negativa"));
+                                    item.setComandoCorreto(rs.getString("comando_correto"));
+                                    item.setInteragivel(rs.getBoolean("interagivel"));
+                                    item.setIdProximaCena(rs.getObject("id_cena_destino") != null ? rs.getInt("id_cena_destino") : null);
+                                    var7 = item;
+                                } catch (Throwable var11) {
+                                    if (rs != null) {
+                                        try {
+                                            rs.close();
+                                        } catch (Throwable var10) {
+                                            var11.addSuppressed(var10);
+                                        }
+                                    }
+
+                                    throw var11;
+                                }
+
+                                if (rs != null) {
+                                    rs.close();
+                                }
+                                break label107;
+                            }
+
+                            if (rs != null) {
+                                rs.close();
+                            }
+                            break label106;
+                        }
+                    } catch (Throwable var12) {
+                        if (stmt != null) {
+                            try {
+                                stmt.close();
+                            } catch (Throwable var9) {
+                                var12.addSuppressed(var9);
+                            }
+                        }
+
+                        throw var12;
+                    }
+
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+                    break label104;
+                }
+
+                if (stmt != null) {
+                    stmt.close();
+                }
+            } catch (Throwable var13) {
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (Throwable var8) {
+                        var13.addSuppressed(var8);
+                    }
+                }
+
+                throw var13;
+            }
+
+            if (conn != null) {
+                conn.close();
+            }
+
+            return item;
         }
 
-        return itens;
+        if (conn != null) {
+            conn.close();
+        }
+
+        return var7;
     }
 }

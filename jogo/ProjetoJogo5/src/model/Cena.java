@@ -7,11 +7,8 @@ public class Cena {
     private String descricao;
     private List<Item> itens;
 
-    public Cena() {
-    }
-
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
@@ -19,7 +16,7 @@ public class Cena {
     }
 
     public String getDescricao() {
-        return this.descricao;
+        return descricao;
     }
 
     public void setDescricao(String descricao) {
@@ -27,16 +24,20 @@ public class Cena {
     }
 
     public List<Item> getItens() {
-        return this.itens;
+        return itens;
     }
 
     public void setItens(List<Item> itens) {
         this.itens = itens;
     }
 
+    @Override
     public String toString() {
-        Integer var10000 = this.id;
-        return "Cena{id=" + var10000 + ", descricao='" + this.descricao + "', itens=" + String.valueOf(this.itens) + "}";
+        return "Cena{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", itens=" + itens +
+                '}';
     }
 
     public int getIdCena() {
