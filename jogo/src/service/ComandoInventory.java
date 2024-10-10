@@ -1,8 +1,3 @@
-//
-// Source code recreated from a .class file by IntelliJ IDEA
-// (powered by FernFlower decompiler)
-//
-
 package service;
 
 import java.util.Iterator;
@@ -24,7 +19,7 @@ public class ComandoInventory {
                 this.console.setMensagem("Seu inventário está vazio.");
             } else {
                 StringBuilder mensagem = new StringBuilder("Itens no seu inventário:\n");
-                Iterator var4 = inventarios.iterator();
+                Iterator<Inventario> var4 = inventarios.iterator();
 
                 while(var4.hasNext()) {
                     Inventario inventario = (Inventario)var4.next();

@@ -18,6 +18,11 @@ public class ComandoRestart {
     }
 
     public Console executar(int idSave) {
+        if (idSave <= 0) {
+            this.console.setMensagem("ID do Save inválido.");
+            return this.console;
+        }
+
         try {
             Save save = SaveDAO.findSaveById(idSave);
             if (save != null) {
@@ -26,10 +31,9 @@ public class ComandoRestart {
             } else {
                 this.console.setMensagem("Não foi possível encontrar o jogo para reiniciar.");
             }
-        } catch (SQLException var3) {
-            SQLException e = var3;
+        } catch (SQLException e) {
             this.console.setMensagem("Erro ao reiniciar o jogo: " + e.getMessage());
-            e.printStackTrace();
+            e.printStackTrace(); // Considere usar um logger aqui
         }
 
         return this.console;

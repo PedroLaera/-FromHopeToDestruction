@@ -78,11 +78,11 @@ public class Main {
                             break;
                         case "USE PIX":
                             StringBuilder resultado = new StringBuilder();
-                            String query = "SELECT i.id AS id_item, i.nome AS nome_item, " +
+                            String query = "select i.id AS id_item, i.nome AS nome_item, " +
                                     "i.descricao_positiva, i.descricao_negativa, c.descricao AS descricao_cena_destino " +
-                                    "FROM itens_da_cena i " +
-                                    "INNER JOIN cenas c ON i.id_cena_destino = c.id " +
-                                    "WHERE i.id_cena_atual = ? AND c.id = ?";
+                                    "from itens_da_cena i " +
+                                    "inner join cenas c ON i.id_cena_destino = c.id " +
+                                    "where i.id_cena_atual = ? AND c.id = ?";
 
                             try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/jogo", "root", "");
                                  PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -114,7 +114,7 @@ public class Main {
                             System.out.println("esse tbm nao foi dessa vez");
                             break;
                         case "LOAD":
-                            System.out.println("nao deu pra fazer aiaiaiia.");
+                            System.out.println("Jogo carregado! prossiga...");
 
                             break;
                         case "EXIT":
